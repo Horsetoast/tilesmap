@@ -1,0 +1,56 @@
+<head>
+  <title>TilesMap</title>
+  <style>
+  #basic-map {
+    background: silver;
+    display: inline-block;
+  }
+  #found-tiles {
+    background: lightblue;
+    display: inline-block;
+  }
+  span {
+    font-size: 10px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #fff;
+    text-align: center;
+    /*line-height: 30px;*/
+    overflow: hidden;
+  }
+  </style>
+</head>
+<body>
+  <script src="./db/map.js"></script>
+
+  <div id="basic-map">
+  </div>
+  <br>
+  <div id="found-tiles">
+  </div>
+
+  <script>
+  const mapSize = 20;
+  const mapDB = map(mapSize);
+
+  const drawBlock = (div, map, mapSize) => {
+    for (let i = 0; i < map.length; i++) {
+      let span = document.createElement('span');
+      span.innerText = map[i].coords[0] + ', ' + map[i].coords[1] + '\n' + map[i].id;
+      div.appendChild(span);
+      if ((i + 1) % mapSize === 0) {
+        let br = document.createElement('br');
+        div.appendChild(br);
+      }
+    }
+  }
+
+  drawBlock(document.getElementById('basic-map'), mapDB.tiles, mapSize);
+
+  const tiles1 = mapDB.getBlockTiles([1, -1], 9, -4, -4);
+  console.log('first tile', tiles1);
+
+  drawBlock(document.getElementById('found-tiles'), tiles1, 9);
+  </script>
+</body>
